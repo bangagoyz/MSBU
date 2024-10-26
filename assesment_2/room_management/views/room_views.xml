@@ -1,0 +1,78 @@
+<odoo>
+    <record id="view_room_tree" model="ir.ui.view">
+        <field name="name">room.booking.room.tree</field>
+        <field name="model">room.booking.room</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="room_type"/>
+                <field name="location"/>
+                <field name="capacity"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_room_form" model="ir.ui.view">
+        <field name="name">room.booking.room.form</field>
+        <field name="model">room.booking.room</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="room_type"/>
+                        <field name="location"/>
+                        <field name="photo" widget="image"/>
+                        <field name="capacity"/>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_room_kanban" model="ir.ui.view">
+        <field name="name">room.booking.room.kanban</field>
+        <field name="model">room.booking.room</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="room_type"/>
+                <field name="location"/>
+                <field name="photo"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div>
+                                <img t-if="record.photo.raw_value" 
+                             t-att-src="'data:image/png;base64,%s' % record.photo.raw_value" 
+                             class="oe_kanban_avatar" 
+                             style="max-width: 100px; max-height: 100px;"/>
+                            </div>
+                            <div>
+                                <strong><field name="name"/></strong>
+                            </div>
+                            <div>
+                                <field name="room_type"/>
+                            </div>
+                            <div>
+                                <field name="location"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_room_master_tree" model="ir.actions.act_window">
+        <field name="name">Rooms</field>
+        <field name="res_model">room.booking.room</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_id" ref="view_room_tree"/>
+    </record>
+
+    <menuitem id="menu_room_root" name="Room Management" sequence="1"/>
+    <menuitem id="menu_room_master" name="Master Room" parent="menu_room_root" action="action_room_master_tree"/>
+    <menuitem id="menu_room_booking" name="Room Booking" parent="menu_room_root" action="action_room_booking_tree"/>
+</odoo>

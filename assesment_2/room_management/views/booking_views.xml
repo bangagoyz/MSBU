@@ -1,0 +1,46 @@
+<odoo>
+
+    <record id="view_booking_tree" model="ir.ui.view">
+        <field name="name">room.booking.tree</field>
+        <field name="model">room.booking</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="booking_number"/>
+                <field name="room_id"/>
+                <field name="booking_name"/>
+                <field name="booking_date"/>
+                <field name="booking_status"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_booking_form" model="ir.ui.view">
+        <field name="name">room.booking.form</field>
+        <field name="model">room.booking</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="booking_number" readonly="1"/>
+                        <field name="room_id"/>
+                        <field name="booking_name"/>
+                        <field name="booking_date"/>
+                        <field name="booking_notes"/>
+                        <field name="booking_status"/>
+                        <button name="action_ongoing" type="object" string="Proses Pemesanan" class="btn-primary" invisible="booking_status != 'draft'"/>      
+                        <button name="action_done" type="object" string="Mark as Done" invisible="booking_status != 'ongoing'"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="action_room_booking_tree" model="ir.actions.act_window">
+        <field name="name">Bookings</field>
+        <field name="res_model">room.booking</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_booking_tree"/>
+    </record>
+
+</odoo>
